@@ -80,71 +80,7 @@ const menu = [
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
 ];
-// get parent element
-const sectionCenter = document.querySelector(".section-center");
-const btnContainer = document.querySelector(".btn-container");
-// display all items when page loads
-window.addEventListener("DOMContentLoaded", function () {
-  diplayMenuItems(menu);
-  displayMenuButtons();
-});
-function diplayMenuItems(menuItems) {
-  let displayMenu = menuItems.map(function (item) {
-    return `<article class="menu-item">
-          <img src=${item.img} alt=${item.title} class="photo" />
-          <div class="item-info">
-            <header>
-              <h4>${item.title}</h4>
-              <h4 class="price">$${item.price}</h4>
-            </header>
-            <p class="item-text">
-              ${item.desc}
-            </p>
-          </div>
-        </article>`;
-  });
- displayMenu = displayMenu.join("");
-  sectionCenter.innerHTML = displayMenu;
-}
-function displayMenuButtons() {
-  const categories = menu.reduce(
-    function (values, item) {
-      if (!values.includes(item.category)) {
-        values.push(item.category);
-      }
-      return values;
-    },
-    ["all"]
-  );
-//console.log("categ", categories);
-  const categoryBtns = categories
-    .map(function (category) {
-      return `<button type="button" class="filter-btn" data-id=${category}>
-          ${category}
-        </button>`;
-    })
-    .join("");
-  btnContainer.innerHTML = categoryBtns;
-  const filterBtns = btnContainer.querySelectorAll(".filter-btn");
-  //console.log(filterBtns;
-  filterBtns.forEach(function (btn) {
-    btn.addEventListener("click", function (e) {
-      // console.log("target", e.currentTarget.dataset);
-      const category = e.currentTarget.dataset.id;
-      const menuCategory = menu.filter(function (menuItem) {
-        // console.log(menuItem.category);
-        if (menuItem.category === category) {
-          return menuItem;
-        }
-      });  
-      if (category === "all") {
-        diplayMenuItems(menu);
-      } else {
-        diplayMenuItems(menuCategory);
-      }  
-    });
-  });
-}
+
 // local reviews data
 const reviews = [
   {
@@ -182,52 +118,4 @@ const reviews = [
       "Edison bulb put a bird on it humblebrag, marfa pok pok heirloom fashion axe cray stumptown venmo actually seitan. VHS farm-to-table schlitz, edison bulb pop-up 3 wolf moon tote bag street art shabby chic. ",
   },
 ];
-// select items
-const img = document.getElementById("person-img");
-const author = document.getElementById("author");
-const job = document.getElementById("job");
-const info = document.getElementById("info");
 
-const prevBtn = document.querySelector(".prev-btn");
-const nextBtn = document.querySelector(".next-btn");
-const randomBtn = document.querySelector(".random-btn");
-
-// set starting item
-let currentItem = 0;
-// load initial item
-window.addEventListener("DOMContentLoaded", function () {
-  const item = reviews[currentItem];
-  img.src = item.img;
-  author.textContent = item.name;
-  job.textContent = item.job;
-  info.textContent = item.text;
-});
-// show person based on item
-function showPerson(person) {
-  const item = reviews[person];
-  img.src = item.img;
-  author.textContent = item.name;
-  job.textContent = item.job;
-  info.textContent = item.text;
-}
-// show next person
-nextBtn.addEventListener("click", function () {
-  currentItem++;
-  if (currentItem > reviews.length - 1) {
-    currentItem = 0;
-  }
-  showPerson(currentItem);
-});
-// show prev person
-prevBtn.addEventListener("click", function () {
-  currentItem--;
-  if (currentItem < 0) {
-    currentItem = reviews.length - 1;
-  }
-  showPerson(currentItem);
-});
-// show random person
-randomBtn.addEventListener("click", function () {
-  currentItem = Math.floor(Math.random() * reviews.length);
-  showPerson(currentItem);
-});
